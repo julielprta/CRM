@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import { AUTEUR_OPTIONS, IRC_CATEGORIES, IRRITANTS_OPTIONS, IrcCategorie } from "@/lib/types";
+import { IRC_CATEGORIES, IRRITANTS_OPTIONS, IrcCategorie } from "@/lib/types";
 
 export default function NewIrcEntryPage() {
   const params = useParams();
@@ -15,7 +15,6 @@ export default function NewIrcEntryPage() {
   const [categorie, setCategorie] = useState<IrcCategorie | "">("");
   const [commentaire, setCommentaire] = useState("");
   const [irritants, setIrritants] = useState<string[]>([]);
-  const [auteur, setAuteur] = useState(AUTEUR_OPTIONS[0] ?? "");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,7 +43,6 @@ export default function NewIrcEntryPage() {
         categorie: categorie || null,
         commentaire: commentaire || null,
         irritants: irritants.join(", ") || null,
-        auteur: auteur || null,
       },
     ]);
 
@@ -79,12 +77,12 @@ export default function NewIrcEntryPage() {
           </label>
           <label className="block">
             <span className="block text-sm font-medium text-ink/70 mb-1">
-              Note (0 à 10)
+              Note (-100 à +100)
             </span>
             <input
               type="number"
-              min={0}
-              max={10}
+              min={-100}
+              max={+100}
               value={note}
               onChange={(e) => setNote(e.target.value)}
               className="input"
@@ -92,33 +90,21 @@ export default function NewIrcEntryPage() {
           </label>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <label className="block">
-            <span className="block text-sm font-medium text-ink/70 mb-1">Catégorie</span>
-            <select
-              value={categorie}
-              onChange={(e) => setCategorie(e.target.value as IrcCategorie)}
-              className="input"
-            >
-              <option value="">—</option>
-              {IRC_CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="block">
-            <span className="block text-sm font-medium text-ink/70 mb-1">Rédigé par</span>
-            <select value={auteur} onChange={(e) => setAuteur(e.target.value)} className="input">
-              {AUTEUR_OPTIONS.map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+        <label className="block">
+          <span className="block text-sm font-medium text-ink/70 mb-1">Catégorie</span>
+          <select
+            value={categorie}
+            onChange={(e) => setCategorie(e.target.value as IrcCategorie)}
+            className="input"
+          >
+            <option value="">—</option>
+            {IRC_CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
 
         <label className="block">
           <span className="block text-sm font-medium text-ink/70 mb-1">

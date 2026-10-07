@@ -97,7 +97,7 @@ export default function ContactDetailPage() {
           {contact.irc_categorie && <IrcBadge categorie={contact.irc_categorie} />}
           {contact.irc_note !== null && (
             <span className="text-xs border border-line rounded-full px-3 py-1 text-ink/70">
-              Note IRC : {contact.irc_note}/10
+              Note IRC : {contact.irc_note > 0 ? "+" : ""}{contact.irc_note}
             </span>
           )}
         </div>
@@ -204,12 +204,9 @@ export default function ContactDetailPage() {
                     <span className="text-ink/50">{formatDateFR(entry.date_entry)}</span>
                     {entry.categorie && <IrcBadge categorie={entry.categorie} />}
                     {entry.note !== null && (
-                      <span className="text-xs text-ink/50">Note : {entry.note}/10</span>
+                      <span className="text-xs text-ink/50">Note : {entry.note > 0 ? "+" : ""}{entry.note}</span>
                     )}
                   </div>
-                  {entry.auteur && (
-                    <span className="text-xs text-ink/40">Rédigé par {entry.auteur}</span>
-                  )}
                 </div>
                 {entry.commentaire && <p className="mb-2">{entry.commentaire}</p>}
                 {entry.irritants && (
@@ -239,9 +236,6 @@ export default function ContactDetailPage() {
               <div key={entry.id} className="border border-line rounded-sm p-4 bg-white/50 text-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-ink/50">{formatDateFR(entry.date_entry)}</span>
-                  {entry.auteur && (
-                    <span className="text-xs text-ink/40">Rédigé par {entry.auteur}</span>
-                  )}
                 </div>
                 <p>{entry.commentaire}</p>
               </div>
@@ -268,9 +262,6 @@ export default function ContactDetailPage() {
               <div key={entry.id} className="border border-line rounded-sm p-4 bg-white/50 text-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-ink/50">{formatDateFR(entry.date_entry)}</span>
-                  {entry.auteur && (
-                    <span className="text-xs text-ink/40">Rédigé par {entry.auteur}</span>
-                  )}
                 </div>
                 <p>{entry.commentaire}</p>
               </div>
